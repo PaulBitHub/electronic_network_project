@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models import NetworkNode, Supplier, Product
+from .models import NetworkNode, Supplier, Product
 from django.utils.html import format_html
 
 admin.site.register(Supplier)
