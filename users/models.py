@@ -14,6 +14,26 @@ class User(AbstractUser):
     )
     token = models.CharField(max_length=100, verbose_name="Токен", **NULLABLE)
 
+    groups = models.ManyToManyField(
+        "auth.Group",
+        verbose_name="groups",
+        blank=True,
+        help_text=(
+            "The groups this user belongs to. "
+            "A user will get all permissions granted to each of their groups."
+        ),
+        related_name="users_user_groups",   # Добавлено для устранения ошибок с обратными связями
+        related_query_name="user",          # моделей приложений при создании миграций в БД
+    )
+    user_permissions = models.ManyToManyField(
+        "auth.Permission",
+        verbose_name="user permissions",
+        blank=True,
+        help_text="Specific permissions for this user.",
+        related_name="users_user_permissions",  # Добавлено для устранения ошибок с обратными связями
+        related_query_name="user_permission",   # моделей приложений при создании миграций в БД
+    )
+
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
