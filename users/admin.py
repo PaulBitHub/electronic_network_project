@@ -1,11 +1,23 @@
 from django.contrib import admin
-
-from users.models import User
+from django.contrib.auth.admin import UserAdmin
+from .models import User  # Убедитесь, что путь импорта правильный
 
 
 @admin.register(User)
-class UserAdmin(admin.ModelAdmin):
+class CustomUserAdmin(UserAdmin):
     list_display = (
-        "username",
         "email",
+        "username",
+        "first_name",
+        "last_name",
+        "is_staff",
     )
+    fieldsets = (
+        (None, {'fields': ('email', 'password')}),
+        ('Personal info', {'fields': ('first_name', 'last_name', 'username')}),
+        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
+        ('Important dates', {'fields': ('last_login', 'date_joined')}),
+    )
+    readonly_fields = ('last_login', 'date_joined')
+    ordering = ('email',)
+    filter_horizontal = ('groups', 'user_permissions',)
