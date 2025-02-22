@@ -2,6 +2,7 @@ from django.db import models
 
 NULLABLE = {"blank": True, "null": True}
 
+
 class Supplier(models.Model):
     """
     Класс поставщика с присущими ему полями
@@ -83,7 +84,7 @@ class NetworkNode(models.Model):
         self.debt_to_supplier = 0.00
         self.save()
 
-    # clean_debt.short_description = "Очистить задолженность перед поставщиком"
+    clean_debt.short_description = "Очистить задолженность перед поставщиком"  #текст команды для пользователя
 
     def save(self, *args, **kwargs):
         if self.parent:
